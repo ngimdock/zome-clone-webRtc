@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      const ROOM_ID = "<%= roomId %>";
+
+      console.log({ ROOM_ID });
+    </script>
+    <title>Learn webRtc</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/socket.io/socket.io.js" defer></script>
+    <script src="cus"></script>
+  </head>
+  <body class="relative px-4 flex justify-center">
+    <section
+      class="max-w-7xl grid grid-cols-3 gap-3 w-[800px] bg-red-400 mt-20 h-96"
+    >
+      <div class="bg-blue-300">div 1</div>
+      <div class="bg-blue-300">div 1</div>
+      <div class="bg-blue-300">div 1</div>
+      <div class="bg-blue-300">div 4.</div>
+    </section>
+  </body>
+</html>

@@ -14,21 +14,25 @@ app.use(express.static("public"));
 app.get("/", (req, res) => {
   const romeRedirectedId = uuidv4();
 
-  console.log({ romeRedirectedId });
-
   res.redirect(`/${romeRedirectedId}`);
 });
 
 app.get("/:rome", (req, res) => {
-  res.send("Hello World!");
-  // res.render("rome", { romeId: req.params.rome });
+  res.render("room", { roomId: req.params.rome });
 });
 
-const port = 5000;
-app.listen(port, () => {
-  console.log(`Express server listening on *: ${port}`);
+io.on("connection", (socket) => {
+  socket.on("join-room", (roomId, userId) => {
+    socket.join(roomId);
+    socket.to(roomId).broadcast.emit("user-connected", userId);
+
+    socket.on("disconnect", () => {
+      socket.to(roomId).broadcast.emit("user-disconnected", userId);
+    });
+  });
 });
 
-server.listen(3000, () => {
-  console.log("socker listening on *:3000");
+const PORT = 5000;
+server.listen(PORT, () => {
+  console.log(`server listening on *:${PORT}`);
 });
