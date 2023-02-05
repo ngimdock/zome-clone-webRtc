@@ -5,7 +5,7 @@ const peer = new Peer(undefined, {
   port: "5001",
 });
 
-const USER_ID = 10;
+const allConnectedUsers = {};
 
 peer.on("open", (userId) => {
   socket.emit("join-room", ROOM_ID, userId);
@@ -16,7 +16,9 @@ socket.on("user-connected", (userId) => {
 });
 
 socket.on("user-disconnected", (userId) => {
-  console.log(`The user disconnected: ${userId}`);
+  if (allConnectedUsers[userId]) {
+    allConnectedUsers[userId].close();
+  }
 });
 
 const videoGrid = document.getElementsByClassName("video-grid");
@@ -59,6 +61,10 @@ function connectToNewUser(userId, stream) {
   call.on("close", () => {
     video.remove();
   });
+
+  allConnectedUsers[userId] = call;
+
+  console.log({ allConnectedUsers });
 }
 
 function addVideoStream(video, stream) {
